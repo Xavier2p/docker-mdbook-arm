@@ -26,7 +26,6 @@ services:
   mdbook:
     container_name: mdbook
     image: ghcr.io/xavier2p/mdbook:latest
-    # image: ghcr.io/xavier2p/mdbook:latest-rust
     stdin_open: true
     tty: true
     ports:
