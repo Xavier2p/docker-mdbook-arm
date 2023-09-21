@@ -1,0 +1,8 @@
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    hadolint:
+        uses: peaceiris/workflows/.github/workflows/hadolint.yml@v0.19.1

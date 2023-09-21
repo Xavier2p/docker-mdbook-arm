@@ -15,16 +15,9 @@
 
 Alpine base Docker Image for [rust-lang/mdBook](https://github.com/rust-lang/mdBook).
 
-## Getting started
-
-| Image tag | Base Image | Image size | Notes |
-|---|---|---|---|
-| `ghcr.io/xavier2p/mdbook:latest` | `alpine:3.16` | 24MB | Minimum image |
-| `ghcr.io/xavier2p/mdbook:latest-rust` | `rust:1.65-alpine3.16` | 880MB | `mdbook test` subcommand is available |
-
 ### Docker Compose
 
-Create your `docker-compose.yml` like the following.
+Create your `docker-compose.yml` like the following, or just use the one in this repository.
 
 ```yaml
 version: '3'
