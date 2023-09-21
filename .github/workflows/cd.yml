@@ -56,6 +56,9 @@ jobs:
               uses: peaceiris/actions-export-envs@v1.1.0
               id: envs
 
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@v2
+
             - name: Setup buildx
               run: |
                   docker buildx create --use --driver docker-container
