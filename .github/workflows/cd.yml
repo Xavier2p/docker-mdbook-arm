@@ -93,7 +93,11 @@ jobs:
               with:
                   context: .
                   file: ./Dockerfile
-                  tags: ${{ env.PKG_TAG }}, ${{ env.PKG_TAG_LATEST }}
+                  tags: |
+                      ${{ env.PKG_TAG }}
+                      ${{ env.PKG_TAG_LATEST }}
                   platforms: linux/arm64
-                  build-args: MDBOOK_VERSION=${{ env.MDBOOK_VERSION }}, BASE_IMAGE=${{ env.BASE_IMAGE }}
+                  build-args: |
+                      MDBOOK_VERSION=${{ env.MDBOOK_VERSION }}
+                      BASE_IMAGE=${{ env.BASE_IMAGE }}
                   push: true
