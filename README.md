@@ -1,40 +1,26 @@
-<!-- https://shields.io/ -->
+# `mdbook` Docker Image for ARM
 
-[![license](https://img.shields.io/github/license/peaceiris/docker-mdbook.svg)](https://github.com/peaceiris/docker-mdbook/blob/main/LICENSE)
-[![release](https://img.shields.io/github/release/peaceiris/docker-mdbook.svg)](https://github.com/peaceiris/docker-mdbook/releases/latest)
-[![GitHub release date](https://img.shields.io/github/release-date/peaceiris/docker-mdbook.svg)](https://github.com/peaceiris/docker-mdbook/releases)
-[![GitHub Actions status](https://github.com/peaceiris/docker-mdbook/workflows/Docker%20Image%20CI/badge.svg)](https://github.com/peaceiris/docker-mdbook/actions)
+*Forked from [peaceiris/docker-mdbook](https://github.com/peaceiris/docker-mdbook).*
 
-<img width="400" alt="Docker image for mdBook" src="./images/ogp.jpg">
-
-
+[![GitHub](https://img.shields.io/github/license/Xavier2p/docker-mdbook-arm?style=for-the-badge&logo=github&color=yellow)
+](https://github.com/xavier2p/docker-mdbook-arm/blob/main/LICENSE)
+[![GitHub release (with filter)](https://img.shields.io/github/v/release/Xavier2p/docker-mdbook-arm?style=for-the-badge&logo=github-actions)
+](https://github.com/xavier2p/docker-mdbook-arm/releases/latest)
+[![GitHub Release Date - Published_At](https://img.shields.io/github/release-date/Xavier2p/docker-mdbook-arm?style=for-the-badge&logo=docker)
+](https://github.com/xavier2p/docker-mdbook-arm/releases)
+[![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/Xavier2p/docker-mdbook-arm/cd.yml?style=for-the-badge&logo=github-actions&label=CD)
+](https://github.com/xavier2p/docker-mdbook/actions-arm)
 
 ## Alpine Base Docker Image for mdBook
 
-Alpine base Docker Image for [rust-lang/mdBook].
-
-[rust-lang/mdBook]: https://github.com/rust-lang/mdBook
-
-- [peaceiris/mdbook - Docker Hub]
-
-[peaceiris/mdbook - Docker Hub]: https://hub.docker.com/r/peaceiris/mdbook
-
-[![DockerHub Badge](https://dockeri.co/image/peaceiris/mdbook)][peaceiris/mdbook - Docker Hub]
-
-Docker images on GitHub Packages [ghcr.io/peaceiris/mdbook] are also available.
-
-[ghcr.io/peaceiris/mdbook]: https://github.com/users/peaceiris/packages/container/package/mdbook
-
-
+Alpine base Docker Image for [rust-lang/mdBook](https://github.com/rust-lang/mdBook).
 
 ## Getting started
 
 | Image tag | Base Image | Image size | Notes |
 |---|---|---|---|
-| `peaceiris/mdbook:v0.x.x` | `alpine:3.16` | 24MB | Minimum image |
-| `peaceiris/mdbook:v0.x.x-rust` | `rust:1.65-alpine3.16` | 880MB | `mdbook test` subcommand is available |
-| `ghcr.io/peaceiris/mdbook:v0.x.x` | `alpine:3.16` | 24MB | GitHub Packages: Minimum image |
-| `ghcr.io/peaceiris/mdbook:v0.x.x-rust` | `rust:1.65-alpine3.16` | 880MB | GitHub Packages: `mdbook test` subcommand is available |
+| `ghcr.io/xavier2p/mdbook:latest` | `alpine:3.16` | 24MB | Minimum image |
+| `ghcr.io/xavier2p/mdbook:latest-rust` | `rust:1.65-alpine3.16` | 880MB | `mdbook test` subcommand is available |
 
 ### Docker Compose
 
@@ -46,14 +32,12 @@ version: '3'
 services:
   mdbook:
     container_name: mdbook
-    image: peaceiris/mdbook:v0.x.x            # Minimum image
-    # image: peaceiris/mdbook:v0.x.x-rust     # `mdbook test` subcommand is available
-    # image: ghcr.io/peaceiris/mdbook:v0.x.x  # Docker images on GitHub Packages
+    image: ghcr.io/xavier2p/mdbook:latest
+    # image: ghcr.io/xavier2p/mdbook:latest-rust
     stdin_open: true
     tty: true
     ports:
       - 3000:3000
-      - 3001:3001
     volumes:
       - ${PWD}:/book
     command:
@@ -72,24 +56,34 @@ docker-compose up
 docker-compose run --rm mdbook init
 ```
 
-
-
 ## GitHub Actions for mdBook
 
 The mdBook Setup GitHub Action is recommended.
 
 - [peaceiris/actions-mdbook: GitHub Actions for mdBook (rust-lang/mdBook) ⚡️ Setup mdBook quickly and build your site fast. Linux (Ubuntu), macOS, and Windows are supported.](https://github.com/peaceiris/actions-mdbook)
 
-
-
 ## License
 
-- [MIT License - peaceiris/docker-mdbook]
+```txt
+MIT License
 
-[MIT License - peaceiris/docker-mdbook]: https://github.com/peaceiris/docker-mdbook/blob/main/LICENSE
+Copyright (c) 2020 peaceiris (Shohei Ueda)
 
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-## About the author
-
-- [peaceiris homepage](https://peaceiris.com/)
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```

@@ -1,0 +1,90 @@
+name: Continuous Delivery
+
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: '11 11 */8 * *'
+    push:
+        branches:
+            - main
+        paths-ignore:
+            - '**.md'
+
+env:
+    DOCKER_BASE_NAME: ghcr.io/xavier2p/mdbook
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}-${{ github.head_ref || github.run_id }}
+    cancel-in-progress: true
+
+jobs:
+    hadolint:
+        uses: peaceiris/workflows/.github/workflows/hadolint.yml@v0.19.1
+
+    docker:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        permissions:
+            actions: write
+            contents: read
+            packages: write
+        env:
+            DOCKER_CLI_EXPERIMENTAL: enabled
+            DOCKER_BUILDKIT: 1
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Set env
+              run: |
+                  MDBOOK_VERSION="$(make get-mdbook-version)"
+                  TAG_NAME="v${MDBOOK_VERSION}"
+                  TAG_NAME_LATEST="latest"
+                  BASE_IMAGE="alpine:3.16"
+                  {
+                    echo "TAG_NAME=${TAG_NAME}"
+                    echo "BASE_IMAGE=${BASE_IMAGE}"
+                    echo "MDBOOK_VERSION=${MDBOOK_VERSION}"
+                    echo "PKG_TAG=${DOCKER_BASE_NAME}:${TAG_NAME}"
+                    echo "PKG_TAG_LATEST=${DOCKER_BASE_NAME}:${TAG_NAME_LATEST}"
+                  } >> "${GITHUB_ENV}"
+
+            - name: Docker version
+              run: docker version
+
+            - name: Export envs
+              uses: peaceiris/actions-export-envs@v1.1.0
+              id: envs
+
+            - name: Setup buildx
+              run: |
+                  docker buildx create --use --driver docker-container
+
+            - name: Build image
+              run: |
+                  docker buildx build . \
+                      --tag "${PKG_TAG}" \
+                      --build-arg MDBOOK_VERSION="${MDBOOK_VERSION}" \
+                      --build-arg BASE_IMAGE="${BASE_IMAGE}" \
+                      --output 'type=docker'
+
+            - name: Tag latest
+              run: docker tag "${PKG_TAG}" "${PKG_TAG_LATEST}"
+
+            - name: Check images
+              run: docker images
+
+            - name: Check version
+              run: docker run --rm "${PKG_TAG}" --version
+
+            - name: Log in to GitHub Container Registry
+              uses: docker/login-action@v2
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Push to GitHub Packages
+              run: |
+                  docker push "${PKG_TAG}"
+                  docker push "${PKG_TAG_LATEST}"
