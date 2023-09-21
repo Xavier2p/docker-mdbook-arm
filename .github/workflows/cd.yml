@@ -105,4 +105,3 @@ jobs:
                       MDBOOK_VERSION=${MDBOOK_VERSION}
                       BASE_IMAGE=${BASE_IMAGE}
                   push: true
-                  outputs: type=docker
