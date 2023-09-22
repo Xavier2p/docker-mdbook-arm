@@ -8,16 +8,26 @@
 ](https://github.com/xavier2p/docker-mdbook-arm/releases/latest)
 [![GitHub Release Date - Published_At](https://img.shields.io/github/release-date/Xavier2p/docker-mdbook-arm?style=for-the-badge&logo=docker)
 ](https://github.com/xavier2p/docker-mdbook-arm/releases)
-[![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/Xavier2p/docker-mdbook-arm/cd.yml?style=for-the-badge&logo=github-actions&label=CD)
+[![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/Xavier2p/docker-mdbook-arm/ci.yml?style=for-the-badge&logo=github-actions&label=CI)
 ](https://github.com/xavier2p/docker-mdbook/actions-arm)
 
-## Alpine Base Docker Image for mdBook
+> Alpine base Docker Image for [rust-lang/mdBook](https://github.com/rust-lang/mdBook).
 
-Alpine base Docker Image for [rust-lang/mdBook](https://github.com/rust-lang/mdBook).
+## Usage
+
+| Command | Description | Implemented |
+| --- | --- | --- |
+| `build` | Build a book from its markdown files | ✅ |
+| `clean` | Remove the book's build directory | ✅ |
+| `init` | Create a new book with basic boilerplate | ✅ |
+| `linkcheck` | Check for broken links in the rendered book | ✅ |
+| `serve` | Start a web server for the book at `http://localhost:3000` | ✅ |
+| `test` | Test the book's Rust code samples | ❌ |
+| `watch` | Watch the book's markdown files and rebuild the book | ✅ |
 
 ### Docker Compose
 
-Create your `docker-compose.yml` like the following, or just use the one in this repository.
+Create your `docker-compose.yml` like the following, or just use the one in this [repository](../docker-compose.yml).
 
 ```yaml
 version: '3'
@@ -38,21 +48,29 @@ services:
       - '0.0.0.0'
 ```
 
-### Usage
+And run it with one of these commands:
 
 ```sh
 # Run "mdbook serve"
 docker-compose up
 
 # Run a command of mdBook
-docker-compose run --rm mdbook init
+docker-compose run --rm mdbook <command>
+```
+
+### Docker CLI
+
+```sh
+# Run "mdbook serve"
+docker run --rm -it -p 3000:3000 -v ${PWD}:/book ghcr.io/xavier2p/mdbook:latest serve --hostname '0.0.0.0'
+
+# Run a command of mdBook
+docker run --rm -it -v ${PWD}:/book ghcr.io/xavier2p/mdbook:latest <command>
 ```
 
 ## GitHub Actions for mdBook
 
-The mdBook Setup GitHub Action is recommended.
-
-- [peaceiris/actions-mdbook: GitHub Actions for mdBook (rust-lang/mdBook) ⚡️ Setup mdBook quickly and build your site fast. Linux (Ubuntu), macOS, and Windows are supported.](https://github.com/peaceiris/actions-mdbook)
+The mdBook Setup GitHub Action is recommended. You can find it here: [peaceiris/actions-mdbook](https://github.com/peaceiris/actions-mdbook).
 
 ## License
 
